@@ -1,136 +1,73 @@
 ```markdown
-# 📝 Angular Blog Website
+# Angular Blog Platform
 
-A simple blog management web application built with **Angular 20**, using **json-server** as a mock backend and **uuid** for generating unique blog IDs.
+A simple blog platform built with Angular and `json-server` for mock backend APIs.
 
-## 📦 Technologies Used
+## Features
 
-- Angular 20 (standalone components)
-- RxJS for reactive programming
-- json-server (for mock RESTful API)
-- uuid (for generating unique IDs)
-- Bootstrap (for UI styling)
+- User registration and login (mocked)
+- Create, edit, and delete blog posts
+- List and view blog details
+- Categories and authors
+- Image support (as URL or base64 string)
+- Responsive UI with Bootstrap
 
----
+## Tech Stack
 
-## 🚀 Features
+- [Angular](https://angular.io/)
+- [json-server](https://github.com/typicode/json-server)
+- [Bootstrap](https://getbootstrap.com/)
 
-- Create blog posts with title, author, category, content, and image
-- Form validation using Angular Reactive Forms
-- Upload and preview images (optional base64 workaround)
-- Uses `uuid` to generate unique IDs for each new blog
-- Mock API powered by `json-server`
+## Getting Started
 
----
+### Prerequisites
 
-## 📁 Project Structure
+- Node.js & npm
+- Angular CLI (`npm install -g @angular/cli`)
+- `json-server` (`npm install -g json-server`)
 
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
+   ```
+
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+
+3. Start the mock backend:
+   ```sh
+   json-server --watch db.json --port 3000
+   ```
+
+4. Start the Angular app:
+   ```sh
+   ng serve
+   ```
+   The app will run at `http://localhost:4200`.
+
+## Project Structure
+
+- `src/app/` — Angular components, services, and models
+- `db.json` — Mock database for users and blogs
+
+## Usage
+
+- Register or log in (mocked)
+- Create, edit, or delete blogs
+- View blogs by category or author
+
+## Notes
+
+- Images are stored as URLs or base64 strings in the `imageUrl` field.
+- `json-server` only supports JSON; file uploads are not supported.
+
+## License
+
+MIT
 ```
-
-src/
-├── app/
-│   ├── create-blog/       # Component to create new blogs
-│   ├── services/
-│   │   └── blogs.service.ts  # Handles HTTP requests
-│   ├── interfaces/
-│   │   └── blog.ts           # Blog interface
-├── db.json               # json-server mock database
-
-````
-
----
-
-## ⚙️ Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/angular-blog-app.git
-cd angular-blog-app
-````
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Install `json-server` and `uuid`
-
-```bash
-npm install json-server uuid
-```
-
-### 4. Run `json-server`
-
-```bash
-npx json-server --watch db.json --port 3000
-```
-
-This will start a REST API at: `http://localhost:3000/blogs`
-
-### 5. Run Angular App
-
-```bash
-ng serve
-```
-
-Open `http://localhost:4200` in your browser.
-
----
-
-## 🧪 API Example
-
-### POST `/blogs`
-
-Example payload:
-
-```json
-{
-  "id": "a1b2c3d4-e5f6-7890-gh12-ijklmnopqrst",
-  "title": "Understanding Angular Signals",
-  "author": "Abu-Ubaida",
-  "category": "Technology",
-  "content": "This is a blog about Angular Signals...",
-  "publishDate": "2025-06-20T12:00:00Z",
-  "lastUpdated": "2025-06-20T12:00:00Z"
-}
-```
-
----
-
-## 📸 Optional: Handling Images with Base64
-
-Since `json-server` doesn't support file uploads, images can be converted to base64 and stored as strings in the `image` field. Use a `FileReader` in Angular to convert uploaded files.
-
----
-
-## ✨ Notes
-
-* This project is ideal for frontend practice with Angular.
-* `json-server` is for mock/testing only. For production, replace it with a real backend.
-* UUIDs ensure unique and non-sequential blog IDs.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Fork the repo and submit a pull request.
-
----
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
-```
-
----
-
-Let me know if you'd like:
-- Image upload via base64 documented in the README
-- Deployment instructions (e.g. GitHub Pages or Vercel)
-- Enhanced sections for routing or filtering blogs
-
-I can help tailor it further!
-```
+Replace `your-username/your-repo` with your actual GitHub repository URL if needed.
