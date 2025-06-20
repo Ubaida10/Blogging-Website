@@ -3,7 +3,8 @@ export interface Blog{
   title: string,
   content: string,
   author: string,
+  category:string,
   publishDate: Date,
-  imageUrl?: string,
+  imageUrl?: any,
   lastUpdated?: Date
 }

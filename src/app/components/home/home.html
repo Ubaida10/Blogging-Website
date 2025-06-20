@@ -1,0 +1,60 @@
+<div class="d-flex flex-column flex-md-row gap-4 mt-3 px-3">
+  <!-- Sidebar -->
+  <div class="p-3" style="width: 100%; max-width: 18rem;">
+    <app-sidebar (filterChanged)="onFilterChange($event)"></app-sidebar>
+  </div>
+
+  <div class="flex-grow-1 p-3">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-3 mb-4">
+      <!-- Search Field -->
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchChange()"
+      />
+
+      <!-- Category Dropdown -->
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ selectedCategory }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+          <li><a class="dropdown-item" (click)="onFilterChange('All')">All</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Sports')">Sports</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Cricket')">Cricket</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Fashion')">Fashion</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Technology')">Technology</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Health')">Health</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Blog Cards -->
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      @for (blog of filteredBlogs; track blog.id) {
+        <div class="card" style="width: 18rem;">
+          <img
+            [ngSrc]="blog.imageUrl || 'https://via.placeholder.com/286x180'"
+            class="card-img-top"
+            alt="Blog Image"
+            width="286"
+            height="180"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }}</h5>
+            <p class="card-text">{{ blog.content }}</p>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              (click)="showDetails(blog.id)"
+            >
+              Read More
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

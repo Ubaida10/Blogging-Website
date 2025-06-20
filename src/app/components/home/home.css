@@ -1,0 +1,13 @@
+/* Dark background and white text */
+.custom-dropdown {
+  background-color: #343a40; /* Bootstrap dark */
+}
+
+.custom-dropdown .dropdown-item {
+  color: #fff;
+}
+
+.custom-dropdown .dropdown-item:hover {
+  background-color: #495057; /* Bootstrap darker gray */
+  color: #ffc107; /* Highlight hover with warning color */
+}

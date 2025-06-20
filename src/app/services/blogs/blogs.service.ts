@@ -1,0 +1,33 @@
+import {inject, Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Blog} from '../../interfaces/blog';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BlogsService {
+
+  private apiUrl = 'http://localhost:3000/blogs';
+  http = inject(HttpClient);
+
+  getAllBlogs(): Observable<Blog[]> {
+    return this.http.get<Blog[]>(this.apiUrl);
+  }
+
+  getBlogById(id: string):Observable<Blog> {
+    return this.http.get<Blog>(`${this.apiUrl}/${id}`);
+  }
+
+  addBlog(blog: Blog): Observable<Blog> {
+    return this.http.post<Blog>(this.apiUrl, blog);
+  }
+  updateBlog(blog: Blog): Observable<Blog>{
+    return this.http.put<Blog>(this.apiUrl, blog);
+  }
+
+  deleteBlog(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+}

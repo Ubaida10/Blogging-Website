@@ -1,0 +1,153 @@
+{
+  "users": [
+    {
+      "id": "02f7",
+      "firstName": "Muhammad Abu Ubaida",
+      "lastName": "Aljerah",
+      "email": "xyz@gmail.com",
+      "password": "LKJH1234",
+      "dateOfBirth": "2023-06-18"
+    },
+    {
+      "id": "3683",
+      "firstName": "XYZ",
+      "lastName": "ABC",
+      "email": "abc@gmail.com",
+      "password": "LKJH1234",
+      "dateOfBirth": "2025-02-05"
+    },
+    {
+      "id": "eb44",
+      "firstName": "XYZ",
+      "lastName": "ABC",
+      "email": "fdc@gmail.com",
+      "password": "poiu1234",
+      "dateOfBirth": "2002-11-18"
+    },
+    {
+      "id": "8ed1",
+      "firstName": "abc",
+      "lastName": "def",
+      "email": "def@gmail.com",
+      "password": "LKJH1234",
+      "confirmPassword": "LKJH1234",
+      "dateOfBirth": "2010-10-12"
+    },
+    {
+      "id": "2ff3",
+      "firstName": "ert",
+      "lastName": "ert",
+      "email": "hjk@gmail.com",
+      "password": "LKJH1234",
+      "confirmPassword": "LKJH1234",
+      "dateOfBirth": "2025-06-20"
+    },
+    {
+      "id": "e961",
+      "firstName": "ert",
+      "lastName": "ert",
+      "email": "rty@gmail.com",
+      "password": "LKJH1234",
+      "confirmPassword": "LKJH1234",
+      "dateOfBirth": "2025-06-04"
+    }
+  ],
+  "blogs": [
+    {
+      "id": "b101",
+      "title": "The Rise of AI in Everyday Life",
+      "content": "Artificial Intelligence is reshaping industries from healthcare to education. This blog explores its impact on daily life.",
+      "author": "Muhammad Abu Ubaida",
+      "category": "Technology",
+      "publishDate": "2025-06-01T10:00:00Z",
+      "imageUrl": "assets/ai.jpg",
+      "lastUpdated": "2025-06-10T15:00:00Z"
+    },
+    {
+      "id": "b102",
+      "title": "Morning Routines That Boost Productivity",
+      "content": "A structured morning can make your whole day better. Discover effective morning habits to enhance focus and energy.",
+      "author": "XYZ ABC",
+      "category": "Health",
+      "publishDate": "2025-05-28T08:30:00Z",
+      "imageUrl": "https://example.com/images/morning.jpg",
+      "lastUpdated": "2025-06-05T12:00:00Z"
+    },
+    {
+      "id": "b104",
+      "title": "Top 10 Study Hacks for University Students",
+      "content": "Learn smarter, not harder. These 10 study hacks will help you retain more information and ace your exams.",
+      "author": "ert ert",
+      "category": "Education",
+      "publishDate": "2025-06-10T14:20:00Z",
+      "imageUrl": "https://example.com/images/study.jpg",
+      "lastUpdated": "2025-06-18T16:30:00Z"
+    },
+    {
+      "id": "b105",
+      "title": "Backpacking Across Northern Pakistan",
+      "content": "From Hunza Valley to Fairy Meadows, follow my unforgettable journey through the scenic landscapes of Pakistan.",
+      "author": "XYZ ABC",
+      "category": "Travel",
+      "publishDate": "2025-04-25T09:00:00Z",
+      "imageUrl": "https://example.com/images/pakistan.jpg"
+    },
+    {
+      "id": "b106",
+      "title": "The Evolution of Football Tactics",
+      "content": "From classic 4-4-2 to modern gegenpressing, football tactics have evolved to become more dynamic and data-driven.",
+      "author": "Muhammad Abu Ubaida",
+      "category": "Sports",
+      "publishDate": "2025-06-12T10:30:00Z",
+      "imageUrl": "https://example.com/images/football.jpg",
+      "lastUpdated": "2025-06-15T09:00:00Z"
+    },
+    {
+      "id": "b108",
+      "title": "Top Cricket World Cup Moments",
+      "content": "Relive the top moments from the Cricket World Cups — from stunning catches to game-changing innings.",
+      "author": "abc def",
+      "category": "Cricket",
+      "publishDate": "2025-05-30T16:45:00Z",
+      "imageUrl": "https://example.com/images/worldcup.jpg",
+      "lastUpdated": "2025-06-05T11:15:00Z"
+    },
+    {
+      "id": "b109",
+      "title": "Athlete Diets That Power Champions",
+      "content": "Learn what top athletes eat to fuel their bodies — from protein-packed breakfasts to pre-game meals.",
+      "author": "ert ert",
+      "category": "Sports",
+      "publishDate": "2025-06-17T09:15:00Z",
+      "imageUrl": "https://example.com/images/sports-nutrition.jpg"
+    },
+    {
+      "id": "b110",
+      "title": "Summer Fashion Trends 2025",
+      "content": "From bold prints to sustainable fabrics, here are the top fashion trends taking over summer 2025.",
+      "author": "XYZ ABC",
+      "category": "Fashion",
+      "publishDate": "2025-06-05T11:00:00Z",
+      "imageUrl": "https://example.com/images/summer-fashion.jpg"
+    },
+    {
+      "id": "b111",
+      "title": "The Rise of Streetwear in Pakistan",
+      "content": "Streetwear is taking over local fashion scenes. Here's how Pakistani youth are shaping this global trend.",
+      "author": "Muhammad Abu Ubaida",
+      "category": "Fashion",
+      "publishDate": "2025-06-14T17:25:00Z",
+      "imageUrl": "https://example.com/images/streetwear.jpg"
+    },
+    {
+      "id": "19a0ffb9-083b-4569-85ee-66dc819e427c",
+      "title": "Learning Angular the Right way",
+      "content": "angular angular angular angular angular angular angular angular angular angular angular angular",
+      "author": "Abu Ubaida",
+      "category": "Technology",
+      "publishDate": "2025-06-20T14:25:45.155Z",
+      "lastUpdated": "2025-06-20T14:25:45.155Z",
+      "image": null
+    }
+  ]
+}

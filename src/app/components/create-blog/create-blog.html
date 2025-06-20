@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <h2>Create New Blog</h2>
+
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="form-control"
+        placeholder="Enter blog title"
+      />
+      <div *ngIf="blogForm.get('title')?.touched && blogForm.get('title')?.invalid" class="text-danger">
+        Title is required.
+      </div>
+    </div>
+
+    <!-- Author -->
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+      <input
+        type="text"
+        id="author"
+        formControlName="author"
+        class="form-control"
+        placeholder="Enter author name"
+      />
+      <div *ngIf="blogForm.get('author')?.touched && blogForm.get('author')?.invalid" class="text-danger">
+        Author is required.
+      </div>
+    </div>
+
+    <!-- Category -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select id="category" formControlName="category" class="form-select">
+        <option value="">Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+      <div *ngIf="blogForm.get('category')?.touched && blogForm.get('category')?.invalid" class="text-danger">
+        Category is required.
+      </div>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="mb-3">
+      <label for="imageFile" class="form-label">Upload Image</label>
+      <input
+        type="file"
+        class="form-control"
+        id="imageFile"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="mb-3">
+      <label for="content" class="form-label">Content</label>
+      <textarea
+        id="content"
+        formControlName="content"
+        class="form-control"
+        rows="5"
+        placeholder="Write your blog here..."
+      ></textarea>
+      <div *ngIf="blogForm.get('content')?.touched && blogForm.get('content')?.invalid" class="text-danger">
+        Content is required.
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">
+      Create Blog
+    </button>
+  </form>
+</div>
