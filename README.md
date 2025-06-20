@@ -66,8 +66,3 @@ A simple blog platform built with Angular and `json-server` for mock backend API
 - Images are stored as URLs or base64 strings in the `imageUrl` field.
 - `json-server` only supports JSON; file uploads are not supported.
 
-## License
-
-MIT
-```
-Replace `your-username/your-repo` with your actual GitHub repository URL if needed.
