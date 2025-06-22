@@ -19,8 +19,16 @@ export class AuthService {
   login(email: string, password: string): Observable<boolean> {
     return this.getAllUsers().pipe(
       map((users: User[])=>{
-        this.loggedIn = true;
-        return users.some(user=>user.email === email && user.password === password);
+        const matchedUser = users.find(user=> user.email === email && user.password === password);
+        if(matchedUser){
+          this.loggedIn = true;
+          localStorage.setItem('user', JSON.stringify(matchedUser));
+          return true;
+        }
+        else{
+          this.loggedIn = false;
+          return false;
+        }
       })
     );
   }
@@ -41,6 +49,31 @@ export class AuthService {
         }
       })
     )
+  }
+
+  updateUser(updatedUser: User): Observable<User> {
+    return this.getAllUsers().pipe(
+      switchMap((users: User[]) => {
+        const userIndex = users.findIndex(user => user.email === updatedUser.email);
+        if (userIndex === -1) {
+          return throwError(() => new Error('User not found.'));
+        }
+
+
+        const updatedUsers = [...users];
+        updatedUsers[userIndex] = updatedUser;
+
+        return this.http.put<User>(`${this.apiUrl}/${updatedUser.id}`, updatedUser).pipe(
+          map(() => updatedUser)
+        );
+      })
+    );
+  }
+
+
+  logout(): void {
+    this.loggedIn = false;
+    localStorage.removeItem('user');
   }
 
   isLoggedIn(): boolean{

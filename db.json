@@ -138,16 +138,6 @@
       "category": "Fashion",
       "publishDate": "2025-06-14T17:25:00Z",
       "imageUrl": "https://example.com/images/streetwear.jpg"
-    },
-    {
-      "id": "19a0ffb9-083b-4569-85ee-66dc819e427c",
-      "title": "Learning Angular the Right way",
-      "content": "angular angular angular angular angular angular angular angular angular angular angular angular",
-      "author": "Abu Ubaida",
-      "category": "Technology",
-      "publishDate": "2025-06-20T14:25:45.155Z",
-      "lastUpdated": "2025-06-20T14:25:45.155Z",
-      "image": null
     }
   ]
 }
