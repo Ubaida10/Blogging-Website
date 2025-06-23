@@ -1,13 +1,14 @@
 <div class="sidebar bg-dark text-white p-3 vh-100">
-  <h4 class="text-info">Blogify</h4>
   <hr class="border-secondary">
 
   <h6 class="text-light mb-3">Filter by Category</h6>
   <ul class="nav flex-column gap-2">
-    <li *ngFor="let cat of categories">
-      <button class="btn btn-outline-light w-100 text-start" (click)="selectCategory(cat)">
-        <i class="bi bi-tag-fill me-2"></i>{{ cat }}
-      </button>
-    </li>
+    @for (cat of categories; track cat.length){
+      <li>
+        <button class="btn btn-outline-light w-100 text-start" (click)="selectCategory(cat)">
+          <i class="bi bi-tag-fill me-2"></i>{{ cat }}
+        </button>
+      </li>
+    }
   </ul>
 </div>

@@ -19,15 +19,17 @@
           {{ selectedCategory }}
         </button>
         <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
-          <li><a class="dropdown-item" (click)="onFilterChange('All')">All</a></li>
-          <li><a class="dropdown-item" (click)="onFilterChange('Sports')">Sports</a></li>
-          <li><a class="dropdown-item" (click)="onFilterChange('Cricket')">Cricket</a></li>
-          <li><a class="dropdown-item" (click)="onFilterChange('Fashion')">Fashion</a></li>
-          <li><a class="dropdown-item" (click)="onFilterChange('Technology')">Technology</a></li>
-          <li><a class="dropdown-item" (click)="onFilterChange('Health')">Health</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('All')" style="cursor: pointer">All</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Sports')" style="cursor: pointer">Sports</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Cricket')" style="cursor: pointer">Cricket</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Fashion')" style="cursor: pointer">Fashion</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Technology')" style="cursor: pointer">Technology</a></li>
+          <li><a class="dropdown-item" (click)="onFilterChange('Health')" style="cursor: pointer">Health</a></li>
         </ul>
       </div>
     </div>
+
+    <!-- Grid or Carousel View-->
     <div class="d-flex justify-content-end mb-3">
       <button class="btn btn-dark" (click)="toggleCarouselView()">
         {{ showCarousel ? 'Switch to Grid View' : 'Switch to Carousel View' }}
@@ -78,17 +80,19 @@
     </div>
 
     <!-- Grid View -->
-    <div *ngIf="!showCarousel" class="d-flex flex-wrap justify-content-center gap-3">
-      @for (blog of filteredBlogs; track blog.id) {
-        <div class="card" style="width: 18rem;">
-          <img [src]="blog.imageUrl || 'https://via.placeholder.com/286x180'" class="card-img-top" style="height: 12rem; object-fit: cover;"  alt=""/>
-          <div class="card-body">
-            <h5 class="card-title">{{ blog.title }}</h5>
-            <p class="card-text text-truncate">{{ blog.content }}</p>
-            <button class="btn btn-primary" (click)="showDetails(blog.id)">Read More</button>
+    @if(!showCarousel){
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        @for (blog of filteredBlogs; track blog.id) {
+          <div class="card" style="width: 18rem;">
+            <img [src]="blog.imageUrl || 'https://via.placeholder.com/286x180'" class="card-img-top" style="height: 12rem; object-fit: cover;"  alt=""/>
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <p class="card-text text-truncate">{{ blog.content }}</p>
+              <button class="btn btn-primary" (click)="showDetails(blog.id)">Read More</button>
+            </div>
           </div>
-        </div>
-      }
-    </div>
+        }
+      </div>
+    }
   </div>
 </div>

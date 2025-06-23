@@ -49,11 +49,12 @@ export class Signup {
   matchPasswordValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
-    if (password !== confirmPassword) {
-      return { passwordMismatch: true };
-    }
-    return null;
+
+    return password && confirmPassword && password !== confirmPassword
+      ? { passwordMismatch: true }
+      : null;
   }
+
 
 
   onSubmit(){
