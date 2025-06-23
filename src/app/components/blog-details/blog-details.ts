@@ -4,13 +4,12 @@ import {BlogsService} from '../../services/blogs/blogs.service';
 import {Blog} from '../../interfaces/blog';
 import {catchError, Observable, of, tap} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {AsyncPipe, DatePipe, NgIf, NgOptimizedImage} from '@angular/common';
+import {AsyncPipe, DatePipe, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-blog-details',
   imports: [
     AsyncPipe,
-    NgOptimizedImage,
     DatePipe,
     NgIf,
     RouterLink

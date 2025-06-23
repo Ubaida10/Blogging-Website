@@ -1,6 +1,6 @@
 @if(blog | async; as blog){
   <div class="card shadow-lg p-4">
-    <img [ngSrc]="blog.imageUrl || 'https://via.placeholder.com/286x180'" class="card-img-top" alt="Blog Image" width="50" height="50">
+    <img [src]="blog.imageUrl || 'https://via.placeholder.com/286x180'" class="card-img-top" alt="Blog Image" style="max-width: 100rem; height: 30rem;object-fit: cover">
 
     <div class="card-body">
       <h1 class="card-title">{{ blog.title }}</h1>

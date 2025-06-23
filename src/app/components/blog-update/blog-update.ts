@@ -1,18 +1,19 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BlogsService} from '../../services/blogs/blogs.service';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Blog} from '../../interfaces/blog';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BlogsService } from '../../services/blogs/blogs.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Blog } from '../../interfaces/blog';
 
 @Component({
   selector: 'app-blog-update',
+  standalone: true,
   imports: [
     ReactiveFormsModule
   ],
   templateUrl: './blog-update.html',
   styleUrl: './blog-update.css'
 })
-export class BlogUpdate implements OnInit{
+export class BlogUpdate implements OnInit {
   blogService = inject(BlogsService);
   router = inject(Router);
   formBuilder = inject(FormBuilder);
@@ -20,6 +21,8 @@ export class BlogUpdate implements OnInit{
 
   blogForm!: FormGroup;
   blogId!: string;
+  imagePreview: string | null = null;
+
   ngOnInit() {
     this.blogForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -28,46 +31,58 @@ export class BlogUpdate implements OnInit{
       imageUrl: ['', Validators.required],
     });
 
-    const id:string|null = this.route.snapshot.paramMap.get('id');
-    if(id){
+    const id: string | null = this.route.snapshot.paramMap.get('id');
+    if (id) {
       this.blogId = id;
       this.blogService.getBlogById(this.blogId).subscribe({
         next: result => {
           this.blogForm.patchValue(result);
+          this.imagePreview = result.imageUrl || null;
         },
         error: error => {
-          console.log(error);
-          this.router.navigate(['/home']).then(r => console.log(r));
+          console.error(error);
+          alert("Failed to load blog.");
+          this.router.navigate(['/home']);
         }
       });
-    }
-    else{
+    } else {
       alert("Invalid Blog Id");
-      this.router.navigate(['/home']).then(r => console.log(r));
+      this.router.navigate(['/home']);
     }
   }
 
-  onSubmit(){
-    if(this.blogForm.valid){
-      const updateBlog:Blog = {
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      this.blogForm.patchValue({ imageUrl: base64 });
+      this.imagePreview = base64;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onSubmit() {
+    if (this.blogForm.valid) {
+      const updateBlog: Blog = {
         id: this.blogId,
         ...this.blogForm.value,
         lastUpdated: new Date()
       };
-      console.log(updateBlog);
+
       this.blogService.updateBlog(updateBlog).subscribe({
-        next: result => {
+        next: () => {
           alert("Blog updated successfully");
-          this.router.navigate(['/home']).then(r => console.log(r));
+          this.router.navigate(['/home']);
         },
-        error: error => {
+        error: () => {
           alert("Failed to update blog");
         }
       });
-    }
-    else{
-      alert("Invalid Blog Id");
-      this.router.navigate(['/home']).then(r => console.log(r));
+    } else {
+      alert("Please fill all required fields");
     }
   }
 }

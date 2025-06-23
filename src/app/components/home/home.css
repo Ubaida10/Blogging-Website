@@ -1,6 +1,5 @@
-/* Dark background and white text */
 .custom-dropdown {
-  background-color: #343a40; /* Bootstrap dark */
+  background-color: #343a40;
 }
 
 .custom-dropdown .dropdown-item {
@@ -8,6 +7,13 @@
 }
 
 .custom-dropdown .dropdown-item:hover {
-  background-color: #495057; /* Bootstrap darker gray */
-  color: #ffc107; /* Highlight hover with warning color */
+  background-color: #495057;
+  color: #ffc107;
+}
+
+.custom-carousel-icon {
+  filter: invert(100%);
+  background-color: black;
+  border-radius: 50%;
+  padding: 10px;
 }

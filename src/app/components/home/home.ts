@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
 import { Router } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
+import {NgIf} from '@angular/common';
 import { Blog } from '../../interfaces/blog';
 import { BlogsService } from '../../services/blogs/blogs.service';
 import { FormsModule } from '@angular/forms';
@@ -11,53 +11,70 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-home',
   imports: [
     Sidebar,
-    NgOptimizedImage,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home {
+export class Home implements OnInit {
   blogs: Blog[] = [];
   filteredBlogs: Blog[] = [];
+  blogChunks: Blog[][] = [];
+  showCarousel: boolean = true;
+
   blogsService = inject(BlogsService);
   router = inject(Router);
   selectedCategory: string = 'All';
-  searchQuery: any;
+  searchQuery: string = '';
 
-  constructor() {
-    this.blogsService.getAllBlogs().subscribe((data: Blog[])=>{
+  ngOnInit() {
+    this.blogsService.getAllBlogs().subscribe((data: Blog[]) => {
       this.blogs = data;
       this.filteredBlogs = this.getFilteredBlogs();
-    })
+      this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+    });
   }
 
-  showDetails(id: string){
+  showDetails(id: string) {
     this.router.navigate([`blog-details/${id}`]).then(r => console.log(r));
   }
 
-  getFilteredBlogs(): Blog[]  {
+  getFilteredBlogs(): Blog[] {
     if (this.selectedCategory === 'All') {
       return this.blogs;
     }
     return this.blogs.filter(blog => blog.category === this.selectedCategory);
   }
 
-  onFilterChange($event: string) {
-    this.selectedCategory = $event;
+  onFilterChange(category: string) {
+    this.selectedCategory = category;
     this.filteredBlogs = this.getFilteredBlogs();
+    this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
   }
 
   onSearchChange() {
-    const query = this.searchQuery?.toLowerCase();
-    if(query){
-      this.filteredBlogs = this.blogs.filter(blog=>
+    const query = this.searchQuery.toLowerCase();
+    if (query) {
+      this.filteredBlogs = this.blogs.filter(blog =>
         blog.title.toLowerCase().includes(query) ||
         blog.content.toLowerCase().includes(query)
       );
-    }
-    else {
+    } else {
       this.filteredBlogs = this.getFilteredBlogs();
     }
+    this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+  }
+
+  chunkBlogs(array: Blog[], chunkSize: number): Blog[][] {
+    const chunks: Blog[][] = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
+  }
+
+  toggleCarouselView() {
+    this.showCarousel = !this.showCarousel;
   }
 }
