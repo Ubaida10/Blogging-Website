@@ -23,7 +23,7 @@ export class BlogsService {
     return this.http.post<Blog>(this.apiUrl, blog);
   }
   updateBlog(blog: Blog): Observable<Blog>{
-    return this.http.put<Blog>(this.apiUrl, blog);
+    return this.http.patch<Blog>(`${this.apiUrl}/${blog.id}`, blog);
   }
 
   deleteBlog(id: string): Observable<void> {

@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h2>Updating Blog</h2>
+
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-lg">
+    <div class="mb-3">
+      <label>Title</label>
+      <input type="text" formControlName="title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Category</label>
+      <input type="text" formControlName="category" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Image URL</label>
+      <input type="text" formControlName="imageUrl" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Content</label>
+      <textarea formControlName="content" class="form-control" rows="6"></textarea>
+    </div>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">Update Blog</button>
+    </div>
+  </form>
+</div>

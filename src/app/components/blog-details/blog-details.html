@@ -17,7 +17,7 @@
       </div>
       <div class="text-end mt-3">
         <a [routerLink]="['/home']" class="btn btn-secondary me-2">Back to Blogs</a>
-        <a [routerLink]="['/blogs/edit', blog.id]" class="btn btn-primary me-2">Edit Blog</a>
+        <a [routerLink]="['/blogs-edit', blog.id]" class="btn btn-primary me-2">Edit Blog</a>
         <button class="btn btn-danger" (click)="deleteBlog(blog.id)">Delete Blog</button>
       </div>
     </div>

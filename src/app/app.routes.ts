@@ -8,6 +8,7 @@ import {authRedirectGuard} from './route-guards/auth-redirect-guards/auth-redire
 import {Profile} from './components/profile/profile';
 import {BlogDetails} from './components/blog-details/blog-details';
 import {CreateBlog} from './components/create-blog/create-blog';
+import {BlogUpdate} from './components/blog-update/blog-update';
 
 export const routes: Routes = [
   {path: '', component: Login, title: 'Login', canActivate: [authRedirectGuard]},
@@ -16,5 +17,6 @@ export const routes: Routes = [
   {path: 'profile', component: Profile, canActivate: [authGuard]},
   {path: 'create-blog', component: CreateBlog, canActivate: [authGuard]},
   {path: 'blog-details/:id', component: BlogDetails, canActivate: [authGuard]},
+  {path: 'blogs-edit/:id', component: BlogUpdate, canActivate: [authGuard]},
   {path: '**', component: PageNotFound, title: 'PageNotFound'},
 ];
