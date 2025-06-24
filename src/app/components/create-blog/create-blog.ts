@@ -29,7 +29,6 @@ export class CreateBlog {
     this.blogForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-      author: ['', Validators.required],
       category: ['', Validators.required],
       imageUrl: ['']  // image in base64 format
     });
@@ -53,12 +52,20 @@ export class CreateBlog {
       alert('Please fill all required fields');
       return;
     }
-
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      alert('User not logged in');
+      this.router.navigate(['/login']);
+      return;
+    }
+    const user = JSON.parse(userData);
+    const firstName = user.firstName;
+    const lastName = user.lastName;
     const blogData = {
       id: uuidv4(),
       title: this.blogForm.value.title,
       content: this.blogForm.value.content,
-      author: this.blogForm.value.author,
+      author: `${firstName} ${lastName}`,
       category: this.blogForm.value.category,
       publishDate: new Date(),
       lastUpdated: new Date(),
@@ -68,7 +75,7 @@ export class CreateBlog {
     this.blogService.addBlog(blogData).subscribe({
       next: () => {
         alert('Blog created successfully');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home']).then(r => console.log(r));
       },
       error: (err) => {
         console.error('Blog creation failed:', err);

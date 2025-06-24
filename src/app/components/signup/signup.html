@@ -86,26 +86,30 @@
               <div class="input-group">
                 <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" class="form-control"
                        formControlName="confirmPassword"
-                       [ngClass]="{ 'is-invalid':
-                            signupForm.get('confirmPassword')?.touched &&
-                            (signupForm.get('confirmPassword')?.invalid || signupForm.hasError('passwordMismatch'))
-                       }"
+                       [ngClass]="{
+             'is-invalid':
+               signupForm.get('confirmPassword')?.touched &&
+               (signupForm.get('confirmPassword')?.invalid || signupForm.errors?.['passwordMismatch'])
+           }"
                        placeholder="Confirm your password" autocomplete="new-password" />
                 <button type="button" class="btn btn-outline-secondary"
                         (click)="showConfirmPassword = !showConfirmPassword" tabindex="-1">
                   <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                 </button>
               </div>
+
+              <!-- 🔄 UPDATED: Error handling for confirmPassword -->
               @if (signupForm.get('confirmPassword')?.errors?.['required'] && signupForm.get('confirmPassword')?.touched) {
                 <div class="invalid-feedback">Confirm password is required.</div>
               }
               @if (signupForm.get('confirmPassword')?.errors?.['minlength'] && signupForm.get('confirmPassword')?.touched) {
                 <div class="invalid-feedback">Confirm password must be at least 8 characters long.</div>
               }
-              @if (signupForm.hasError('passwordMismatch') && signupForm.get('confirmPassword')?.touched) {
-                <div class="invalid-feedback">Passwords do not match.</div>
+              @if (signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched) {
+                <div class="invalid-feedback d-block">Passwords do not match.</div> <!-- 🔄 CHANGED: added d-block -->
               }
             </div>
+
 
 
             <div class="mb-4">

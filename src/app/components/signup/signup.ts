@@ -37,25 +37,12 @@ export class Signup {
     password: ['', [Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
     dateOfBirth: ['', [Validators.required]],
-  },{ validators: this.matchPasswordValidator });
+  },{ validators: matchPasswordValidator });
 
   successMessage: any;
   todayDate: string | undefined;
   showPassword:boolean = false;
   showConfirmPassword:boolean = false;
-
-
-
-  matchPasswordValidator(group: AbstractControl): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-
-    return password && confirmPassword && password !== confirmPassword
-      ? { passwordMismatch: true }
-      : null;
-  }
-
-
 
   onSubmit(){
     this.submissionError = null;
@@ -79,4 +66,13 @@ export class Signup {
       })
     ).subscribe()
   }
+}
+
+function matchPasswordValidator(group: AbstractControl): ValidationErrors | null {
+  const password = group.get('password')?.value;
+  const confirmPassword = group.get('confirmPassword')?.value;
+
+  return password && confirmPassword && password !== confirmPassword
+    ? { passwordMismatch: true }
+    : null;
 }
