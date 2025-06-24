@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, EMPTY, tap } from 'rxjs';
-import { NgClass } from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 
 @Component({
   standalone: true,
@@ -11,7 +11,8 @@ import { NgClass } from '@angular/common';
   imports: [
     ReactiveFormsModule,
     NgClass,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -25,7 +26,7 @@ export class Login {
   showPassword:boolean = false;
 
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
 

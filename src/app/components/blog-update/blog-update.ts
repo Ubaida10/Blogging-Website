@@ -3,12 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BlogsService } from '../../services/blogs/blogs.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Blog } from '../../interfaces/blog';
+import {NgClass, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-blog-update',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgClass,
+    NgIf
   ],
   templateUrl: './blog-update.html',
   styleUrl: './blog-update.css'
@@ -22,6 +25,7 @@ export class BlogUpdate implements OnInit {
   blogForm!: FormGroup;
   blogId!: string;
   imagePreview: string | null = null;
+  originalBlog!: Blog;
 
   ngOnInit() {
     this.blogForm = this.formBuilder.group({
@@ -36,7 +40,13 @@ export class BlogUpdate implements OnInit {
       this.blogId = id;
       this.blogService.getBlogById(this.blogId).subscribe({
         next: result => {
-          this.blogForm.patchValue(result);
+          this.originalBlog = { ...result };
+          this.blogForm.patchValue({
+            title: result.title || '',
+            content: result.content || '',
+            category: result.category || '',
+            imageUrl: result.imageUrl || ''
+          });
           this.imagePreview = result.imageUrl || null;
         },
         error: error => {
@@ -66,23 +76,41 @@ export class BlogUpdate implements OnInit {
 
   onSubmit() {
     if (this.blogForm.valid) {
-      const updateBlog: Blog = {
-        id: this.blogId,
-        ...this.blogForm.value,
-        lastUpdated: new Date()
-      };
+      const currentValues = this.blogForm.value;
+      const hasChanges = this.hasChanges(currentValues, this.originalBlog);
 
-      this.blogService.updateBlog(updateBlog).subscribe({
-        next: () => {
-          alert("Blog updated successfully");
-          this.router.navigate(['/home']).then(r => console.log(r));
-        },
-        error: () => {
-          alert("Failed to update blog");
-        }
-      });
+      if (hasChanges) {
+        const updateBlog: Blog = {
+          id: this.blogId,
+          ...currentValues,
+          lastUpdated: new Date()
+        };
+
+        this.blogService.updateBlog(updateBlog).subscribe({
+          next: () => {
+            alert("Blog updated successfully");
+            this.router.navigate(['/home']).then(r => console.log(r));
+          },
+          error: () => {
+            alert("Failed to update blog");
+          }
+        });
+      } else {
+        alert("No changes detected. Nothing to update.");
+        this.router.navigate(['/home']).then(r => console.log(r));
+      }
     } else {
-      alert("Please fill all required fields");
+      this.blogForm.markAllAsTouched();
+      alert("Please fill all required fields correctly.");
     }
+  }
+
+  private hasChanges(current: Partial<Blog>, original: Blog): boolean {
+    return (
+      current.title !== original.title ||
+      current.content !== original.content ||
+      current.category !== original.category ||
+      current.imageUrl !== original.imageUrl
+    );
   }
 }

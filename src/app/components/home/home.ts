@@ -30,7 +30,7 @@ export class Home implements OnInit {
 
   ngOnInit() {
     this.blogsService.getAllBlogs().subscribe((data: Blog[]) => {
-      this.blogs = data;
+      this.blogs = data.sort((a,b)=>new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
       this.filteredBlogs = this.getFilteredBlogs();
       this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
     });
@@ -44,7 +44,7 @@ export class Home implements OnInit {
     if (this.selectedCategory === 'All') {
       return this.blogs;
     }
-    return this.blogs.filter(blog => blog.category === this.selectedCategory);
+    return this.filteredBlogs.filter(blog => blog.category === this.selectedCategory);
   }
 
   onFilterChange(category: string) {

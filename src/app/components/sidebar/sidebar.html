@@ -5,7 +5,9 @@
   <ul class="nav flex-column gap-2">
     @for (cat of categories; track cat.length){
       <li>
-        <button class="btn btn-outline-light w-100 text-start" (click)="selectCategory(cat)">
+        <button class="btn btn-outline-light w-100 text-start"
+                [ngClass]="{'btn-light text-black': selectedCategory === cat}"
+                (click)="selectCategory(cat)">
           <i class="bi bi-tag-fill me-2"></i>{{ cat }}
         </button>
       </li>
