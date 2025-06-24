@@ -57,7 +57,7 @@ export class Signup {
     this.authService.signup(user).pipe(
       tap(()=>{
         console.log('Account created successfully.');
-        this.router.navigate(['/']);
+        this.router.navigate(['/']).then(r => console.log(r));
       }),
       catchError(err=>{
         console.error('Signup error:', err);

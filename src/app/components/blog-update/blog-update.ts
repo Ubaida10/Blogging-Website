@@ -42,12 +42,12 @@ export class BlogUpdate implements OnInit {
         error: error => {
           console.error(error);
           alert("Failed to load blog.");
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home']).then(r => console.log(r));
         }
       });
     } else {
       alert("Invalid Blog Id");
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home']).then(r => console.log(r));
     }
   }
 
@@ -75,7 +75,7 @@ export class BlogUpdate implements OnInit {
       this.blogService.updateBlog(updateBlog).subscribe({
         next: () => {
           alert("Blog updated successfully");
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home']).then(r => console.log(r));
         },
         error: () => {
           alert("Failed to update blog");

@@ -1,11 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [
-    NgForOf
-  ],
+  imports: [],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css'
 })

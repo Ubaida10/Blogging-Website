@@ -19,7 +19,6 @@ import { v4 as uuidv4 } from 'uuid';
 export class CreateBlog {
   blogForm: FormGroup;
   categories = ['Sports', 'Cricket', 'Fashion', 'Technology', 'Health'];
-  imagePreview: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +29,7 @@ export class CreateBlog {
       title: ['', Validators.required],
       content: ['', Validators.required],
       category: ['', Validators.required],
-      imageUrl: ['']  // image in base64 format
+      imageUrl: ['']
     });
   }
 
@@ -42,7 +41,6 @@ export class CreateBlog {
     reader.onload = () => {
       const base64 = reader.result as string;
       this.blogForm.patchValue({ imageUrl: base64 });
-      this.imagePreview = base64; // show preview if needed
     };
     reader.readAsDataURL(file);
   }
@@ -55,7 +53,7 @@ export class CreateBlog {
     const userData = localStorage.getItem('user');
     if (!userData) {
       alert('User not logged in');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']).then(r => console.log(r));
       return;
     }
     const user = JSON.parse(userData);

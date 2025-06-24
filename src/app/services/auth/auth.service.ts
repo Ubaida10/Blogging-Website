@@ -22,6 +22,7 @@ export class AuthService {
         const matchedUser = users.find(user=> user.email === email && user.password === password);
         if(matchedUser){
           this.loggedIn = true;
+          localStorage.clear();
           localStorage.setItem('user', JSON.stringify(matchedUser));
           return true;
         }

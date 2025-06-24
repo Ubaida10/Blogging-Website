@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, EMPTY, tap } from 'rxjs';
 import { NgClass } from '@angular/common';
 
@@ -45,7 +45,7 @@ export class Login {
       tap(success => {
         if (success) {
           console.log('User logged in successfully');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home']).then(r => console.log(r));
         } else {
           this.submissionError = 'Invalid email or password.';
         }

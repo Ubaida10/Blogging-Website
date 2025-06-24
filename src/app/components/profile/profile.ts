@@ -1,5 +1,4 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Sidebar} from '../sidebar/sidebar';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -66,7 +65,6 @@ export class Profile implements OnInit {
           alert('Profile updated successfully!');
           this.isEditMode = false;
           this.profileForm.disable();
-          // Optionally, you can redirect to another page or refresh the current page
           this.router.navigate(['/home']).then(r => console.log(r));
         },
         error: (error) => {
