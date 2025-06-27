@@ -1,14 +1,7 @@
 import { Routes } from '@angular/router';
-import {Login} from './components/login/login';
-import {Signup} from './components/signup/signup';
-import {Home} from './components/home/home';
-import {PageNotFound} from './components/page-not-found/page-not-found';
 import {authGuard} from './route-guards/auth-guards/auth-guard';
 import {authRedirectGuard} from './route-guards/auth-redirect-guards/auth-redirect-guard';
-import {Profile} from './components/profile/profile';
-import {BlogDetails} from './components/blog-details/blog-details';
-import {CreateBlog} from './components/create-blog/create-blog';
-import {BlogUpdate} from './components/blog-update/blog-update';
+
 
 export const routes: Routes = [
   {
