@@ -21,7 +21,6 @@ export class CreateBlog {
 
   constructor(
     private fb: FormBuilder,
-    private blogService: BlogsService,
     private router: Router,
     private store: Store
   ) {

@@ -13,30 +13,63 @@ const initialState: BlogState = {
 }
 
 
-export const blogReducer = createReducer<BlogState>(
+export const blogReducer = createReducer(
   initialState,
-  on(BlogActions.loadBlogSuccess, (state, { blogs })=>({
-    ...state,
-    blogs
-  })),
 
-  on(BlogActions.loadBlogFailure, (state, {error})=>({
-    ...state,
-    error
-  })),
+  on(BlogActions.loadBlogSuccess, (state, action)=>{
+    return {
+      ...state,
+      blogs: action.blogs,
+      error: null
+    };
+  }),
 
-  on(BlogActions.createBlogSuccess, (state, { blog }) =>({
-    ...state,
-    blogs: [...state.blogs, blog]
-  })),
 
-  on(BlogActions.updateBlogSuccess, (state, { blog })=>({
-    ...state,
-    blogs: state.blogs.map(b=>b.id === blog.id ? blog : b)
-  })),
+  on(BlogActions.loadBlogFailure, (state, action)=>{
+    return {
+      ...state,
+      error: action.error
+    };
+  }),
 
-  on(BlogActions.deleteBlogSuccess, (state, { id }) => ({
-    ...state,
-    blogs: state.blogs.filter(blog => blog.id !== id)
-  }))
+  on(BlogActions.createBlogSuccess, (state, action)=>{
+    return {
+      ...state,
+      blogs: [...state.blogs, action.blog],
+      error: null
+    };
+  }),
+
+  on(BlogActions.createBlogFailure, (state, action)=>{
+    return {
+      ...state,
+      error: action.error
+    };
+  }),
+
+  on(BlogActions.updateBlogSuccess, (state, action)=>{
+    const updatedList = state.blogs.map(blog=>{
+      if(blog.id === action.blog.id){
+        return action.blog;
+      }
+      else{
+        return blog;
+      }
+    });
+
+    return {
+      ...state,
+      blogs: updatedList
+    };
+  }),
+
+  on(BlogActions.deleteBlogSuccess, (state, action)=>{
+    const filteredBlogs = state.blogs.filter(blog=>blog.id!==action.id);
+
+    return {
+      ...state,
+      blogs: filteredBlogs,
+      error: null
+    };
+  })
 );

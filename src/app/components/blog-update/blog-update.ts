@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BlogsService } from '../../services/blogs/blogs.service';
+import {ActivatedRoute, Router} from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Blog } from '../../models/blog';
-import {NgClass} from '@angular/common';
-import {Store} from '@ngrx/store';
-import {updateBlog} from '../../state/blog.actions';
+import { NgClass, Location } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { updateBlog, loadBlogs } from '../../state/blog.actions';
+import { selectBlogById } from '../../state/blog.selector';
 
 @Component({
   selector: 'app-blog-update',
@@ -18,17 +18,19 @@ import {updateBlog} from '../../state/blog.actions';
   styleUrl: './blog-update.css'
 })
 export class BlogUpdate implements OnInit {
-  blogService = inject(BlogsService);
   router = inject(Router);
   formBuilder = inject(FormBuilder);
   route = inject(ActivatedRoute);
   store = inject(Store);
+
 
   blogForm!: FormGroup;
   blogId!: string;
   imagePreview: string | null = null;
   originalBlog!: Blog;
   categories = ['Sports', 'Cricket', 'Fashion', 'Technology', 'Health'];
+
+  constructor(private location: Location) {}
 
   ngOnInit() {
     this.blogForm = this.formBuilder.group({
@@ -41,21 +43,18 @@ export class BlogUpdate implements OnInit {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.blogId = id;
-      this.blogService.getBlogById(this.blogId).subscribe({
-        next: result => {
-          this.originalBlog = { ...result };
+      this.store.select(selectBlogById(this.blogId)).subscribe(blog => {
+        if (blog) {
+          this.originalBlog = { ...blog };
           this.blogForm.patchValue({
-            title: result.title || '',
-            content: result.content || '',
-            category: result.category || '',
-            imageUrl: result.imageUrl || ''
+            title: blog.title || '',
+            content: blog.content || '',
+            category: blog.category || '',
+            imageUrl: blog.imageUrl || ''
           });
-          this.imagePreview = result.imageUrl || null;
-        },
-        error: error => {
-          console.error(error);
-          alert("Failed to load blog.");
-          this.router.navigate(['/home']).then(r => console.log(r));
+          this.imagePreview = blog.imageUrl || null;
+        } else {
+          this.store.dispatch(loadBlogs());
         }
       });
     } else {
@@ -110,5 +109,9 @@ export class BlogUpdate implements OnInit {
       current.category !== original.category ||
       current.imageUrl !== original.imageUrl
     );
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

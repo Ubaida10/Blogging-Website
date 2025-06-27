@@ -33,6 +33,10 @@ export class BlogDetails implements OnInit {
   }
 
   deleteBlog(id: string) {
+    const answer = confirm("Are you sure you want to delete this blog?");
+    if (!answer) {
+      return;
+    }
     this.store.dispatch(deleteBlog({ id }));
     this.router.navigate(['/home']).then(r => console.log(r));
   }

@@ -26,6 +26,7 @@ export class Home implements OnInit {
   blogChunks: Blog[][] = [];
   showCarousel: boolean = true;
   loading: boolean = true;
+  filtering: boolean = false;
 
   router = inject(Router);
   selectedCategory: string = 'All';
@@ -34,7 +35,6 @@ export class Home implements OnInit {
   store = inject(Store);
 
   ngOnInit() {
-    this.store.dispatch(loadBlogs());
     this.store.select(selectAllBlogs).subscribe((data: Blog[]) => {
       this.blogs = [...data].sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
       this.filteredBlogs = this.getFilteredBlogs();
@@ -55,18 +55,27 @@ export class Home implements OnInit {
   }
 
   onFilterChange(category: string) {
+    this.filtering = true;
     this.selectedCategory = category;
-    this.filteredBlogs = this.getFilteredBlogs();
-    this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+
+    setTimeout(()=>{
+      this.filteredBlogs = this.getFilteredBlogs();
+      this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+      this.filtering = false;
+    }, 500);
   }
 
   onSearchChange() {
+    this.filtering = true;
     const categoryFiltered = this.selectedCategory === 'All'
       ? this.blogs
       : this.blogs.filter(blog => blog.category === this.selectedCategory);
 
-    this.filteredBlogs = this.applySearch(categoryFiltered, this.searchQuery);
-    this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+    setTimeout(() => {
+      this.filteredBlogs = this.applySearch(categoryFiltered, this.searchQuery);
+      this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+      this.filtering = false;
+    }, 500); // optional delay to simulate processing
   }
 
   chunkBlogs(array: Blog[], chunkSize: number): Blog[][] {
@@ -91,6 +100,10 @@ export class Home implements OnInit {
   }
 
   deleteBlog(id: string) {
+    const answer = confirm("Are you sure you want to delete this blog?");
+    if(!answer){
+      return;
+    }
     this.store.dispatch(deleteBlog({ id }));
     this.router.navigate(['/home']).then(r => console.log(r));
   }

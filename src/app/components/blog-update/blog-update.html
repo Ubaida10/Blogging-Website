@@ -67,8 +67,9 @@
     </div>
 
     <!-- Submit -->
-    <div class="text-end">
-      <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">Update BlogModel</button>
+    <div class="text-end mt-3">
+      <button type="button" (click)="goBack()" class="btn btn-secondary me-2">Back</button>
+      <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">Update</button>
     </div>
   </form>
 </div>
