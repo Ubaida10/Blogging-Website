@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2>Updating Blog</h2>
+  <h2>Updating BlogModel</h2>
 
   <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-lg">
 
@@ -7,18 +7,28 @@
     <div class="mb-3">
       <label>Title</label>
       <input type="text" formControlName="title" class="form-control" [ngClass]="{'is-invalid': blogForm.get('title')?.touched && blogForm.get('title')?.invalid}" />
-      <div *ngIf="blogForm.get('title')?.touched && blogForm.get('title')?.errors?.['required']" class="invalid-feedback">
-        Title is required.
-      </div>
+      @if(blogForm.get('title')?.touched && blogForm.get('title')?.errors?.['required']){
+        <div class="invalid-feedback">
+          Title is required.
+        </div>
+      }
+
     </div>
 
     <!-- Category -->
     <div class="mb-3">
-      <label>Category</label>
-      <input type="text" formControlName="category" class="form-control" [ngClass]="{'is-invalid': blogForm.get('category')?.touched && blogForm.get('category')?.invalid}" />
-      <div *ngIf="blogForm.get('category')?.touched && blogForm.get('category')?.errors?.['required']" class="invalid-feedback">
-        Category is required.
-      </div>
+      <label for="category" class="form-label">Category</label>
+      <select id="category" formControlName="category" class="form-select">
+        <option value="">Select Category</option>
+        @for(cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
+      </select>
+      @if(blogForm.get('category')?.touched && blogForm.get('category')?.errors?.['required']){
+        <div class="invalid-feedback">
+          Category is required.
+        </div>
+      }
     </div>
 
     <!-- Image Upload -->
@@ -31,27 +41,34 @@
         accept="image/*"
         [ngClass]="{'is-invalid': blogForm.get('imageUrl')?.touched && blogForm.get('imageUrl')?.invalid}"
       />
-      <div *ngIf="blogForm.get('imageUrl')?.touched && blogForm.get('imageUrl')?.errors?.['required']" class="invalid-feedback">
-        Image is required.
-      </div>
+      @if(blogForm.get('imageUrl')?.touched && blogForm.get('imageUrl')?.errors?.['required']){
+        <div class="invalid-feedback">
+          Image is required.
+        </div>
+      }
+      @if(imagePreview){
+        <div class="mt-2">
+          <img [src]="imagePreview" alt="BlogModel Image Preview" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+        </div>
+      }
 
-      <div class="mt-2" *ngIf="imagePreview">
-        <img [src]="imagePreview" alt="Blog Image Preview" class="img-fluid" style="max-width: 200px; max-height: 200px;">
-      </div>
+
     </div>
 
     <!-- Content -->
     <div class="mb-3">
       <label>Content</label>
       <textarea formControlName="content" class="form-control" rows="6" [ngClass]="{'is-invalid': blogForm.get('content')?.touched && blogForm.get('content')?.invalid}"></textarea>
-      <div *ngIf="blogForm.get('content')?.touched && blogForm.get('content')?.errors?.['required']" class="invalid-feedback">
-        Content is required.
-      </div>
+      @if(blogForm.get('content')?.touched && blogForm.get('content')?.errors?.['required']){
+        <div class="invalid-feedback">
+          Content is required.
+        </div>
+      }
     </div>
 
     <!-- Submit -->
     <div class="text-end">
-      <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">Update Blog</button>
+      <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">Update BlogModel</button>
     </div>
   </form>
 </div>

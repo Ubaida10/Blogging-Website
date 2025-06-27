@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
-import { Router } from '@angular/router';
-import {NgIf} from '@angular/common';
-import { Blog } from '../../interfaces/blog';
-import { BlogsService } from '../../services/blogs/blogs.service';
+import {Router, RouterLink} from '@angular/router';
+import { Blog } from '../../models/blog';
 import { FormsModule } from '@angular/forms';
+import {DatePipe} from '@angular/common';
+import {Store} from '@ngrx/store';
+import {deleteBlog, loadBlogs} from '../../state/blog.actions';
+import {selectAllBlogs} from '../../state/blog.selector';
 
 @Component({
   standalone: true,
@@ -12,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     Sidebar,
     FormsModule,
-    NgIf
+    RouterLink,
+    DatePipe
   ],
   templateUrl: './home.html',
   styleUrl: './home.css'
@@ -22,17 +25,21 @@ export class Home implements OnInit {
   filteredBlogs: Blog[] = [];
   blogChunks: Blog[][] = [];
   showCarousel: boolean = true;
+  loading: boolean = true;
 
-  blogsService = inject(BlogsService);
   router = inject(Router);
   selectedCategory: string = 'All';
   searchQuery: string = '';
 
+  store = inject(Store);
+
   ngOnInit() {
-    this.blogsService.getAllBlogs().subscribe((data: Blog[]) => {
-      this.blogs = data.sort((a,b)=>new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    this.store.dispatch(loadBlogs());
+    this.store.select(selectAllBlogs).subscribe((data: Blog[]) => {
+      this.blogs = [...data].sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
       this.filteredBlogs = this.getFilteredBlogs();
       this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+      this.loading = data?.length === 0;
     });
   }
 
@@ -44,7 +51,7 @@ export class Home implements OnInit {
     if (this.selectedCategory === 'All') {
       return this.blogs;
     }
-    return this.filteredBlogs.filter(blog => blog.category === this.selectedCategory);
+    return this.blogs.filter(blog => blog.category === this.selectedCategory);
   }
 
   onFilterChange(category: string) {
@@ -54,15 +61,11 @@ export class Home implements OnInit {
   }
 
   onSearchChange() {
-    const query = this.searchQuery.toLowerCase();
-    if (query) {
-      this.filteredBlogs = this.blogs.filter(blog =>
-        blog.title.toLowerCase().includes(query) ||
-        blog.content.toLowerCase().includes(query)
-      );
-    } else {
-      this.filteredBlogs = this.getFilteredBlogs();
-    }
+    const categoryFiltered = this.selectedCategory === 'All'
+      ? this.blogs
+      : this.blogs.filter(blog => blog.category === this.selectedCategory);
+
+    this.filteredBlogs = this.applySearch(categoryFiltered, this.searchQuery);
     this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
   }
 
@@ -76,5 +79,19 @@ export class Home implements OnInit {
 
   toggleCarouselView() {
     this.showCarousel = !this.showCarousel;
+  }
+
+  applySearch(blogs: Blog[], query: string): Blog[] {
+    if (!query) return blogs;
+    const lower = query.toLowerCase();
+    return blogs.filter(blog =>
+      blog.title.toLowerCase().includes(lower) ||
+      blog.content.toLowerCase().includes(lower)
+    );
+  }
+
+  deleteBlog(id: string) {
+    this.store.dispatch(deleteBlog({ id }));
+    this.router.navigate(['/home']).then(r => console.log(r));
   }
 }

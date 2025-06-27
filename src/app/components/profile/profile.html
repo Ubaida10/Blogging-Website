@@ -13,9 +13,12 @@
         class="form-control"
         placeholder="Enter first name"
       />
-      <div *ngIf="profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid" class="text-danger">
-        First name is required.
-      </div>
+      @if(profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid){
+        <div class="text-danger">
+          First name is required.
+        </div>
+      }
+
     </div>
 
     <!-- Last Name -->
@@ -28,9 +31,12 @@
         class="form-control"
         placeholder="Enter last name"
       />
-      <div *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid" class="text-danger">
-        Last name is required.
-      </div>
+      @if(profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid){
+        <div class="text-danger">
+          Last name is required.
+        </div>
+      }
+
     </div>
 
     <!-- Email -->
@@ -43,9 +49,11 @@
         class="form-control"
         placeholder="Enter email address"
       />
-      <div *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.invalid" class="text-danger">
-        Valid email is required.
-      </div>
+      @if(profileForm.get('email')?.touched && profileForm.get('email')?.invalid){
+        <div class="text-danger">
+          Valid email is required.
+        </div>
+      }
     </div>
 
     <!-- Date of Birth -->
@@ -57,9 +65,11 @@
         formControlName="dateOfBirth"
         class="form-control"
       />
-      <div *ngIf="profileForm.get('dateOfBirth')?.touched && profileForm.get('dateOfBirth')?.invalid" class="text-danger">
-        Date of birth is required.
-      </div>
+      @if(profileForm.get('dateOfBirth')?.touched && profileForm.get('dateOfBirth')?.invalid){
+        <div class="text-danger">
+          Date of birth is required.
+        </div>
+      }
     </div>
 
     <!-- Password -->
@@ -72,9 +82,11 @@
         class="form-control"
         placeholder="Enter password"
       />
-      <div *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.invalid" class="text-danger">
-        Password must be at least 8 characters long.
-      </div>
+      @if(profileForm.get('password')?.touched && profileForm.get('password')?.invalid){
+        <div class="text-danger">
+          Password must be at least 8 characters long.
+        </div>
+      }
     </div>
 
     <!-- Action Buttons -->

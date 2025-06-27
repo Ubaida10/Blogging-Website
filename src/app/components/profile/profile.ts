@@ -9,7 +9,6 @@ import {NgIf} from '@angular/common';
   imports: [
     NgIf,
     ReactiveFormsModule
-
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css'

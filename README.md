@@ -1,5 +1,5 @@
 ```markdown
-# Angular Blog Platform
+# Angular BlogModel Platform
 
 A simple blog platform built with Angular and `json-server` for mock backend APIs.
 

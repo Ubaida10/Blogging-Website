@@ -2,16 +2,17 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlogsService } from '../../services/blogs/blogs.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Blog } from '../../interfaces/blog';
-import {NgClass, NgIf} from '@angular/common';
+import { Blog } from '../../models/blog';
+import {NgClass} from '@angular/common';
+import {Store} from '@ngrx/store';
+import {updateBlog} from '../../state/blog.actions';
 
 @Component({
   selector: 'app-blog-update',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgClass,
-    NgIf
+    NgClass
   ],
   templateUrl: './blog-update.html',
   styleUrl: './blog-update.css'
@@ -21,11 +22,13 @@ export class BlogUpdate implements OnInit {
   router = inject(Router);
   formBuilder = inject(FormBuilder);
   route = inject(ActivatedRoute);
+  store = inject(Store);
 
   blogForm!: FormGroup;
   blogId!: string;
   imagePreview: string | null = null;
   originalBlog!: Blog;
+  categories = ['Sports', 'Cricket', 'Fashion', 'Technology', 'Health'];
 
   ngOnInit() {
     this.blogForm = this.formBuilder.group({
@@ -56,7 +59,7 @@ export class BlogUpdate implements OnInit {
         }
       });
     } else {
-      alert("Invalid Blog Id");
+      alert("Invalid BlogModel Id");
       this.router.navigate(['/home']).then(r => console.log(r));
     }
   }
@@ -80,21 +83,16 @@ export class BlogUpdate implements OnInit {
       const hasChanges = this.hasChanges(currentValues, this.originalBlog);
 
       if (hasChanges) {
-        const updateBlog: Blog = {
+        const updatedBlog: Blog = {
           id: this.blogId,
           ...currentValues,
           lastUpdated: new Date()
         };
 
-        this.blogService.updateBlog(updateBlog).subscribe({
-          next: () => {
-            alert("Blog updated successfully");
-            this.router.navigate(['/home']).then(r => console.log(r));
-          },
-          error: () => {
-            alert("Failed to update blog");
-          }
-        });
+        this.store.dispatch(updateBlog({ blog: updatedBlog }));
+        alert("Blog updated successfully!");
+        this.router.navigate(['/home']).then(r => console.log(r));
+
       } else {
         alert("No changes detected. Nothing to update.");
         this.router.navigate(['/home']).then(r => console.log(r));

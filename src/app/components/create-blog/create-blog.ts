@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { BlogsService } from '../../services/blogs/blogs.service';
 import { Router } from '@angular/router';
-import { NgForOf, NgIf } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
+import {Store} from '@ngrx/store';
+import {createBlog} from '../../state/blog.actions';
 
 @Component({
   selector: 'app-create-blog',
@@ -11,9 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./create-blog.css'],
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    NgForOf,
-    NgIf
+    ReactiveFormsModule
   ]
 })
 export class CreateBlog {
@@ -23,7 +22,8 @@ export class CreateBlog {
   constructor(
     private fb: FormBuilder,
     private blogService: BlogsService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {
     this.blogForm = this.fb.group({
       title: ['', Validators.required],
@@ -70,15 +70,8 @@ export class CreateBlog {
       imageUrl: this.blogForm.value.imageUrl || null
     };
 
-    this.blogService.addBlog(blogData).subscribe({
-      next: () => {
-        alert('Blog created successfully');
-        this.router.navigate(['/home']).then(r => console.log(r));
-      },
-      error: (err) => {
-        console.error('Blog creation failed:', err);
-        alert('Failed to create blog');
-      }
-    });
+    this.store.dispatch(createBlog({ blog: blogData }));
+    alert('Blog created successfully!');
+    this.router.navigate(['/home']).then(r => console.log(r));
   }
 }

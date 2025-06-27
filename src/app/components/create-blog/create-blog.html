@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2>Create New Blog</h2>
+  <h2>Create New BlogModel</h2>
 
   <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 
@@ -13,9 +13,11 @@
         class="form-control"
         placeholder="Enter blog title"
       />
-      <div *ngIf="blogForm.get('title')?.touched && blogForm.get('title')?.invalid" class="text-danger">
-        Title is required.
-      </div>
+      @if(blogForm.get('title')?.touched && blogForm.get('title')?.invalid){
+        <div class="text-danger">
+          Title is required.
+        </div>
+      }
     </div>
 
 
@@ -24,11 +26,15 @@
       <label for="category" class="form-label">Category</label>
       <select id="category" formControlName="category" class="form-select">
         <option value="">Select Category</option>
-        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        @for(cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
       </select>
-      <div *ngIf="blogForm.get('category')?.touched && blogForm.get('category')?.invalid" class="text-danger">
-        Category is required.
-      </div>
+      @if(blogForm.get('category')?.touched && blogForm.get('category')?.invalid){
+        <div class="text-danger">
+          Category is required.
+        </div>
+      }
     </div>
 
     <!-- Image Upload -->
@@ -41,6 +47,11 @@
         (change)="onFileSelected($event)"
         accept="image/*"
       />
+      @if(blogForm.get('imageUrl')?.touched && blogForm.get('imageUrl')?.errors?.['required']){
+        <div class="invalid-feedback">
+          Image is required.
+        </div>
+      }
     </div>
 
     <!-- Content -->
@@ -53,14 +64,16 @@
         rows="5"
         placeholder="Write your blog here..."
       ></textarea>
-      <div *ngIf="blogForm.get('content')?.touched && blogForm.get('content')?.invalid" class="text-danger">
-        Content is required.
-      </div>
+      @if(blogForm.get('content')?.touched && blogForm.get('content')?.invalid){
+        <div class="text-danger">
+          Content is required.
+        </div>
+      }
     </div>
 
     <!-- Submit -->
     <button type="submit" class="btn btn-primary" [disabled]="blogForm.invalid">
-      Create Blog
+      Create BlogModel
     </button>
   </form>
 </div>

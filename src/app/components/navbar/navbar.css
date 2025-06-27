@@ -1,4 +1,4 @@
 nav.navbar {
-  position: relative;  /* or sticky/fixed */
-  z-index: 1051;        /* must be higher than sidebar (default fixed elements often use ~1030) */
+  position: relative;
+  z-index: 1051;
 }

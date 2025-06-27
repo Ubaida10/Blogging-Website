@@ -38,19 +38,19 @@ export const routes: Routes = [
   {
     path: 'create-blog',
     loadComponent: () => import('./components/create-blog/create-blog').then(m => m.CreateBlog),
-    title: 'Create Blog',
+    title: 'Create BlogModel',
     canActivate: [authGuard]
   },
   {
     path: 'blog-details/:id',
     loadComponent: () => import('./components/blog-details/blog-details').then(m => m.BlogDetails),
-    title: 'Blog Details',
+    title: 'BlogModel Details',
     canActivate: [authGuard]
   },
   {
     path: 'blogs-edit/:id',
     loadComponent: () => import('./components/blog-update/blog-update').then(m => m.BlogUpdate),
-    title: 'Update Blog',
+    title: 'Update BlogModel',
     canActivate: [authGuard]
   },
   {

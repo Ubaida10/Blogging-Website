@@ -3,7 +3,7 @@
 
   <h6 class="text-light mb-3">Filter by Category</h6>
   <ul class="nav flex-column gap-2">
-    @for (cat of categories; track cat.length){
+    @for (cat of categories; track cat){
       <li>
         <button class="btn btn-outline-light w-100 text-start"
                 [ngClass]="{'btn-light text-black': selectedCategory === cat}"

@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, EMPTY, tap } from 'rxjs';
-import {NgClass, NgIf} from '@angular/common';
+import {NgClass} from '@angular/common';
 
 @Component({
   standalone: true,
@@ -11,8 +11,7 @@ import {NgClass, NgIf} from '@angular/common';
   imports: [
     ReactiveFormsModule,
     NgClass,
-    RouterLink,
-    NgIf
+    RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
