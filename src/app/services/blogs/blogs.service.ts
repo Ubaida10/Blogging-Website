@@ -20,6 +20,7 @@ export class BlogsService {
   }
 
   addBlog(blog: Blog): Observable<Blog> {
+
     return this.http.post<Blog>(this.apiUrl, blog);
   }
   updateBlog(blog: Blog): Observable<Blog>{

@@ -1,4 +1,4 @@
-import {Blog} from '../models/blog';
+import {Blog} from '../../models/blog';
 import {createReducer, on} from '@ngrx/store';
 import * as BlogActions from './blog.actions';
 

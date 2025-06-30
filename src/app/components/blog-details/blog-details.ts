@@ -4,8 +4,8 @@ import {Blog} from '../../models/blog';
 import { Observable } from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {AsyncPipe, DatePipe} from '@angular/common';
-import { selectBlogById } from '../../state/blog.selector';
-import {deleteBlog, loadBlogs} from '../../state/blog.actions';
+import { selectBlogById } from '../../state/blogs/blog.selector';
+import {deleteBlog} from '../../state/blogs/blog.actions';
 import {Store} from '@ngrx/store';
 
 @Component({

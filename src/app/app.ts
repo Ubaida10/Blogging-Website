@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {Navbar} from './components/navbar/navbar';
 import {Store} from '@ngrx/store';
-import {loadBlogs} from './state/blog.actions';
+import {loadBlogs} from './state/blogs/blog.actions';
 
 @Component({
   selector: 'app-root',

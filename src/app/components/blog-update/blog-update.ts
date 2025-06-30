@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Blog } from '../../models/blog';
 import { NgClass, Location } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { updateBlog, loadBlogs } from '../../state/blog.actions';
-import { selectBlogById } from '../../state/blog.selector';
+import { updateBlog, loadBlogs } from '../../state/blogs/blog.actions';
+import { selectBlogById } from '../../state/blogs/blog.selector';
 
 @Component({
   selector: 'app-blog-update',
@@ -53,11 +53,13 @@ export class BlogUpdate implements OnInit {
             imageUrl: blog.imageUrl || ''
           });
           this.imagePreview = blog.imageUrl || null;
-        } else {
+        }
+        else {
           this.store.dispatch(loadBlogs());
         }
       });
-    } else {
+    }
+    else {
       alert("Invalid BlogModel Id");
       this.router.navigate(['/home']).then(r => console.log(r));
     }

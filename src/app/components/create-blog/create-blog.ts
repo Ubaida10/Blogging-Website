@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { BlogsService } from '../../services/blogs/blogs.service';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import {Store} from '@ngrx/store';
-import {createBlog} from '../../state/blog.actions';
+import {createBlog} from '../../state/blogs/blog.actions';
 
 @Component({
   selector: 'app-create-blog',

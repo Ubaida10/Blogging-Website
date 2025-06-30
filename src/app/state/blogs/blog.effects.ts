@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {BlogsService} from '../services/blogs/blogs.service';
+import {BlogsService} from '../../services/blogs/blogs.service';
 import * as BlogActions from './blog.actions';
 import {catchError, mergeMap, of} from 'rxjs';
 import {map} from 'rxjs/operators';

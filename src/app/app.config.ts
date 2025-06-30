@@ -7,10 +7,10 @@ import {
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { blogReducer } from './state/blog.reducers';
+import { blogReducer } from './state/blogs/blog.reducers';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
-import { BlogEffects } from './state/blog.effects';
+import { BlogEffects } from './state/blogs/blog.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {

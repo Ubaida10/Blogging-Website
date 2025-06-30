@@ -5,8 +5,8 @@ import { Blog } from '../../models/blog';
 import { FormsModule } from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {Store} from '@ngrx/store';
-import {deleteBlog, loadBlogs} from '../../state/blog.actions';
-import {selectAllBlogs} from '../../state/blog.selector';
+import {deleteBlog} from '../../state/blogs/blog.actions';
+import {selectAllBlogs} from '../../state/blogs/blog.selector';
 
 @Component({
   standalone: true,
@@ -21,18 +21,18 @@ import {selectAllBlogs} from '../../state/blog.selector';
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
+
+  router = inject(Router);
+  store = inject(Store);
+
   blogs: Blog[] = [];
   filteredBlogs: Blog[] = [];
   blogChunks: Blog[][] = [];
   showCarousel: boolean = true;
   loading: boolean = true;
   filtering: boolean = false;
-
-  router = inject(Router);
   selectedCategory: string = 'All';
   searchQuery: string = '';
-
-  store = inject(Store);
 
   ngOnInit() {
     this.store.select(selectAllBlogs).subscribe((data: Blog[]) => {
@@ -75,7 +75,7 @@ export class Home implements OnInit {
       this.filteredBlogs = this.applySearch(categoryFiltered, this.searchQuery);
       this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
       this.filtering = false;
-    }, 500); // optional delay to simulate processing
+    }, 500);
   }
 
   chunkBlogs(array: Blog[], chunkSize: number): Blog[][] {
