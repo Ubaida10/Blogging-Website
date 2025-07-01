@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, Input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-sidebar',
   imports: [
     NgClass
@@ -10,12 +11,11 @@ import {NgClass} from '@angular/common';
   styleUrl: './sidebar.css'
 })
 export class Sidebar {
+  @Input() selectedCategory: string = 'All';
   @Output() filterChanged = new EventEmitter<string>();
 
   categories = ['All', 'Sports', 'Cricket', 'Fashion', 'Technology', 'Health'];
-  selectedCategory: string = 'All';
   selectCategory(category: string) {
-    this.selectedCategory = category;
     this.filterChanged.emit(category);
   }
 }

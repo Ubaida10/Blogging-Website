@@ -6,6 +6,7 @@ import { NgClass, Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { updateBlog, loadBlogs } from '../../state/blogs/blog.actions';
 import { selectBlogById } from '../../state/blogs/blog.selector';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-blog-update',
@@ -22,6 +23,7 @@ export class BlogUpdate implements OnInit {
   formBuilder = inject(FormBuilder);
   route = inject(ActivatedRoute);
   store = inject(Store);
+  toaster = inject(ToastrService);
 
 
   blogForm!: FormGroup;
@@ -91,12 +93,12 @@ export class BlogUpdate implements OnInit {
         };
 
         this.store.dispatch(updateBlog({ blog: updatedBlog }));
-        alert("Blog updated successfully!");
-        this.router.navigate(['/home']).then(r => console.log(r));
+        this.toaster.success('Blog updated', 'Success');
+        this.location.back();
 
       } else {
         alert("No changes detected. Nothing to update.");
-        this.router.navigate(['/home']).then(r => console.log(r));
+        this.location.back();
       }
     } else {
       this.blogForm.markAllAsTouched();

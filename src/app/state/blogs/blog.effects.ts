@@ -10,13 +10,16 @@ export class BlogEffects{
   actions$  = inject(Actions);
   blogService = inject(BlogsService);
 
-  loadBlogs$ = createEffect(()=>
+  loadBlogs$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActions.loadBlogs),
-      mergeMap(()=>
+      mergeMap(() =>
         this.blogService.getAllBlogs().pipe(
-          map(blogs=>BlogActions.loadBlogSuccess({ blogs })),
-          catchError(error=>of(BlogActions.loadBlogFailure({ error })))
+          map(blogs => {
+            console.log('Blogs loaded from API:', blogs); // Add this line
+            return BlogActions.loadBlogSuccess({ blogs });
+          }),
+          catchError(error => of(BlogActions.loadBlogFailure({ error })))
         )
       )
     )

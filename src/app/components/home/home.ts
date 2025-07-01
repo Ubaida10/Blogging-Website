@@ -1,12 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
-import {Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Blog } from '../../models/blog';
 import { FormsModule } from '@angular/forms';
-import {DatePipe} from '@angular/common';
-import {Store} from '@ngrx/store';
-import {deleteBlog} from '../../state/blogs/blog.actions';
-import {selectAllBlogs} from '../../state/blogs/blog.selector';
+import { DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { deleteBlog, setBlogFilter } from '../../state/blogs/blog.actions';
+import { selectAllBlogs, selectBlogFilter } from '../../state/blogs/blog.selector';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription, combineLatest } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -20,10 +22,11 @@ import {selectAllBlogs} from '../../state/blogs/blog.selector';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home implements OnInit {
+export class Home implements OnInit, OnDestroy {
 
   router = inject(Router);
   store = inject(Store);
+  toaster = inject(ToastrService);
 
   blogs: Blog[] = [];
   filteredBlogs: Blog[] = [];
@@ -34,13 +37,23 @@ export class Home implements OnInit {
   selectedCategory: string = 'All';
   searchQuery: string = '';
 
+  private sub: Subscription = new Subscription();
+
   ngOnInit() {
-    this.store.select(selectAllBlogs).subscribe((data: Blog[]) => {
-      this.blogs = [...data].sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    this.sub = combineLatest([
+      this.store.select(selectAllBlogs),
+      this.store.select(selectBlogFilter)
+    ]).subscribe(([blogs, category]) => {
+      this.blogs = [...blogs].sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+      this.selectedCategory = category;
       this.filteredBlogs = this.getFilteredBlogs();
       this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
-      this.loading = data?.length === 0;
+      this.loading = blogs.length === 0;
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   showDetails(id: string) {
@@ -56,11 +69,9 @@ export class Home implements OnInit {
 
   onFilterChange(category: string) {
     this.filtering = true;
-    this.selectedCategory = category;
+    this.store.dispatch(setBlogFilter({ category }));
 
-    setTimeout(()=>{
-      this.filteredBlogs = this.getFilteredBlogs();
-      this.blogChunks = this.chunkBlogs(this.filteredBlogs, 3);
+    setTimeout(() => {
       this.filtering = false;
     }, 500);
   }
@@ -101,10 +112,10 @@ export class Home implements OnInit {
 
   deleteBlog(id: string) {
     const answer = confirm("Are you sure you want to delete this blog?");
-    if(!answer){
+    if (!answer) {
       return;
     }
     this.store.dispatch(deleteBlog({ id }));
-    this.router.navigate(['/home']).then(r => console.log(r));
+    this.toaster.error('Blog has been deleted!', 'Error');
   }
 }

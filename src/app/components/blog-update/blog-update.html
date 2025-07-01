@@ -5,7 +5,7 @@
 
     <!-- Title -->
     <div class="mb-3">
-      <label>Title</label>
+      <label>Title <span class="text-danger">*</span></label>
       <input type="text" formControlName="title" class="form-control" [ngClass]="{'is-invalid': blogForm.get('title')?.touched && blogForm.get('title')?.invalid}" />
       @if(blogForm.get('title')?.touched && blogForm.get('title')?.errors?.['required']){
         <div class="invalid-feedback">
@@ -17,7 +17,7 @@
 
     <!-- Category -->
     <div class="mb-3">
-      <label for="category" class="form-label">Category</label>
+      <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
       <select id="category" formControlName="category" class="form-select">
         <option value="">Select Category</option>
         @for(cat of categories; track cat) {
@@ -33,7 +33,7 @@
 
     <!-- Image Upload -->
     <div class="mb-3">
-      <label>Upload Image</label>
+      <label>Upload Image <span class="text-danger">*</span></label>
       <input
         type="file"
         class="form-control"
@@ -57,7 +57,7 @@
 
     <!-- Content -->
     <div class="mb-3">
-      <label>Content</label>
+      <label>Content <span class="text-danger">*</span></label>
       <textarea formControlName="content" class="form-control" rows="6" [ngClass]="{'is-invalid': blogForm.get('content')?.touched && blogForm.get('content')?.invalid}"></textarea>
       @if(blogForm.get('content')?.touched && blogForm.get('content')?.errors?.['required']){
         <div class="invalid-feedback">

@@ -1,7 +1,10 @@
 <div class="d-flex flex-column flex-md-row gap-4 mt-3 px-3">
   <!-- Sidebar -->
   <div class="p-3" style="width: 100%; max-width: 18rem;">
-    <app-sidebar (filterChanged)="onFilterChange($event)"></app-sidebar>
+    <app-sidebar
+      [selectedCategory]="selectedCategory"
+      (filterChanged)="onFilterChange($event)"
+    ></app-sidebar>
   </div>
 
   <div class="flex-grow-1 p-3">
@@ -154,7 +157,10 @@
 
                   <div class="d-grid gap-2 mt-auto">
                     <button class="btn btn-primary w-100" (click)="showDetails(blog.id)">Read More</button>
-                    <a [routerLink]="['/blogs-edit', blog.id]" class="btn btn-outline-primary btn-sm w-100">Edit</a>
+                    <a
+                      [routerLink]="['/blogs-edit', blog.id]"
+                      [queryParams]="{ filter: selectedCategory }"
+                      class="btn btn-outline-primary btn-sm w-100">Edit</a>
                     <button class="btn btn-outline-danger btn-sm w-100" (click)="deleteBlog(blog.id)">Delete</button>
                   </div>
                 </div>

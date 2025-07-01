@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, EMPTY, tap } from 'rxjs';
 import {NgClass} from '@angular/common';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ export class Login {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   fb: FormBuilder = inject(FormBuilder);
+  toaster = inject(ToastrService);
 
   submissionError:string| null = null;
   showPassword:boolean = false;
@@ -44,7 +46,7 @@ export class Login {
     this.authService.login(email, password).pipe(
       tap(success => {
         if (success) {
-          console.log('User logged in successfully');
+          this.toaster.success('Logged in successfully!', 'Success');
           this.router.navigate(['/home']).then(r => console.log(r));
         } else {
           this.submissionError = 'Invalid email or password.';

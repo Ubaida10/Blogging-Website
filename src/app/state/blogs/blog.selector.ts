@@ -15,3 +15,8 @@ export const selectBlogById = (id: string) => createSelector(
   (blogs) => blogs.find(blog => blog.id === id)
 );
 
+// src/app/state/blogs/blog.selector.ts
+export const selectBlogFilter = createSelector(
+  selectBlogState,
+  (state) => state.selectedCategory
+);

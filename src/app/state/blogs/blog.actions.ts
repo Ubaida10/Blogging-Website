@@ -22,3 +22,7 @@ export const updateBlogFailure = createAction('[BlogModel] Update BlogModel Fail
 export const deleteBlog = createAction('[BlogModel] Delete BlogModel', props<{id: string}>());
 export const deleteBlogSuccess = createAction('[BlogModel] Delete BlogModel Success', props<{id: string}>());
 export const deleteBlogFailure = createAction('[BlogModel] Delete BlogModel Failure', props<{error: string}>());
+
+
+// src/app/state/blogs/blog.actions.ts
+export const setBlogFilter = createAction('[BlogModel] Set Blog Filter', props<{ category: string }>());

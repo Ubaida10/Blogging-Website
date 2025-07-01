@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import {Store} from '@ngrx/store';
 import {createBlog} from '../../state/blogs/blog.actions';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-blog',
@@ -18,6 +19,7 @@ export class CreateBlog {
   blogForm: FormGroup;
   categories = ['Sports', 'Cricket', 'Fashion', 'Technology', 'Health'];
 
+  toaster = inject(ToastrService);
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -69,7 +71,7 @@ export class CreateBlog {
     };
 
     this.store.dispatch(createBlog({ blog: blogData }));
-    alert('Blog created successfully!');
+    this.toaster.success('Blog created successfully!', 'Success');
     this.router.navigate(['/home']).then(r => console.log(r));
   }
 }

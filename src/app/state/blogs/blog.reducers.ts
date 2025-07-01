@@ -4,12 +4,14 @@ import * as BlogActions from './blog.actions';
 
 export interface BlogState {
   blogs: Blog[],
-  error: string | null
+  error: string | null,
+  selectedCategory: string
 }
 
 const initialState: BlogState = {
   blogs: [],
-  error: null
+  error: null,
+  selectedCategory: 'All'
 }
 
 
@@ -71,5 +73,11 @@ export const blogReducer = createReducer(
       blogs: filteredBlogs,
       error: null
     };
-  })
+  }),
+
+  // src/app/state/blogs/blog.reducers.ts
+  on(BlogActions.setBlogFilter, (state, action) => ({
+    ...state,
+    selectedCategory: action.category
+  })),
 );
