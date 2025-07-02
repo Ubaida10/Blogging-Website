@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { catchError, EMPTY, tap } from 'rxjs';
 import { NgClass } from '@angular/common';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -28,6 +29,7 @@ export class Signup {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   fb: FormBuilder = inject(FormBuilder);
+  toaster = inject(ToastrService);
 
   submissionError: string | null = null;
   signupForm: FormGroup = this.fb.group({
@@ -56,7 +58,7 @@ export class Signup {
     const user = this.signupForm.value;
     this.authService.signup(user).pipe(
       tap(()=>{
-        console.log('Account created successfully.');
+        this.toaster.info("User has been created successfully", "Success");
         this.router.navigate(['/']).then(r => console.log(r));
       }),
       catchError(err=>{
