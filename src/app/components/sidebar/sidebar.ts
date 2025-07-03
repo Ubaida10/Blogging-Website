@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -8,7 +8,8 @@ import {NgClass} from '@angular/common';
     NgClass
   ],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css'
+  styleUrl: './sidebar.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Sidebar {
   @Input() selectedCategory: string = 'All';
