@@ -75,7 +75,7 @@ export const blogReducer = createReducer(
     };
   }),
 
-  // src/app/state/blogs/blog.reducers.ts
+
   on(BlogActions.setBlogFilter, (state, action) => ({
     ...state,
     selectedCategory: action.category

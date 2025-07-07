@@ -16,7 +16,7 @@ export class BlogEffects{
       mergeMap(() =>
         this.blogService.getAllBlogs().pipe(
           map(blogs => {
-            console.log('Blogs loaded from API:', blogs); // Add this line
+            console.log('Blogs loaded from API:', blogs);
             return BlogActions.loadBlogSuccess({ blogs });
           }),
           catchError(error => of(BlogActions.loadBlogFailure({ error })))
