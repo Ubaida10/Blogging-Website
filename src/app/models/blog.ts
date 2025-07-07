@@ -5,6 +5,6 @@ export interface Blog {
   author: string,
   category:string,
   publishDate: Date,
-  imageUrl?: any,
-  lastUpdated?: Date
+  imageUrl: any,
+  lastUpdated: Date
 }
